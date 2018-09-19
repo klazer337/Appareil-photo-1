@@ -15,18 +15,24 @@ class ViewController: UIViewController {
     
     var imagePicker = UIImagePickerController()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        imagePicker.allowsEditing = true
+        imagePicker.allowsEditing = false // true si besoin
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if imageViewChoisi.image == nil {
+            nosImagesLabel.isHidden = false
+        } else {
+            nosImagesLabel.isHidden = true
+        }
     }
     
     func presentWithSource(_ source: UIImagePickerController.SourceType) {      // source que l'on doit envoyer
         imagePicker.sourceType = source
         present(imagePicker,animated: true,completion: nil)
-        
-        
     }
 
     @IBAction func prendrePhoto(_ sender: UIButton) {
@@ -54,10 +60,8 @@ class ViewController: UIViewController {
             popover.sourceRect = CGRect(x: view.frame.midX, y: view.frame.midY, width: 0, height: 0)
             popover.permittedArrowDirections = []
         }
-        
         present(alerteActionSheet,animated: true,completion: nil)
     }
-    
 }
 
 
